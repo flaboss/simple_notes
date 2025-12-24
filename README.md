@@ -1,6 +1,6 @@
 # Kivy Notes App
 
-Um gestor de notas moderno e minimalista construído com Python e Kivy, focado em boas práticas de engenharia de software.
+Um gestor de notas moderno e minimalista construído com Python e Kivy.
 
 ## Tecnologias
 - **Framework:** Kivy 2.3.0
