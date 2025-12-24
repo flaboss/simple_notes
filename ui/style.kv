@@ -1,0 +1,231 @@
+# Estilo personalizado para os campos de texto
+<ModernInput@TextInput>:
+    background_normal: ''
+    background_active: ''
+    background_disabled_normal: ''
+    background_color: 0, 0, 0, 0  # Remove o fundo padrão
+    padding: [dp(15), dp(15)]
+    font_size: '16sp'
+    cursor_color: 0.2, 0.4, 1, 1
+    foreground_color: 0, 0, 0, 1
+    disabled_foreground_color: 0, 0,  0, 1
+    readonly_foreground_color: 0, 0, 0, 1
+    use_bubble: True
+    hint_text_color: 0.5, 0.5, 0.5, 1
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  # Fundo branco
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(10),]
+        Color:
+            rgba: (0.2, 0.4, 1, 1) if self.focus else (0.9, 0.9, 0.9, 1)
+        Line:
+            rounded_rectangle: (self.x, self.y, self.width, self.height, dp(10))
+            width: dp(1)
+
+# Estilização de um botão de nota personalizado
+<NoteItem@Button>:
+    background_normal: ''
+    background_color: 0, 0, 0, 0  # Torna o fundo do botão transparente
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1  # Fundo branco para o "Card"
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(10),]  # Bordas arredondadas
+    
+    # Alinhamento à ESQUERDA
+    text_size: self.width - dp(40), None  # Define largura do texto menor que o botão
+    halign: 'left'
+    valign: 'middle'
+    padding: [dp(20), dp(10)]
+    color: 0.1, 0.1, 0.1, 1  # Texto quase preto
+
+<ConfirmPopup>:
+    orientation: 'vertical'
+    padding: dp(20)
+    spacing: dp(20)
+    
+    Label:
+        text: "Tem certeza que deseja excluir esta nota? Esta ação não pode ser desfeita."
+        text_size: self.width, None
+        halign: 'center'
+        font_size: '16sp'
+        color: 1,1,1,1
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(50)
+        spacing: dp(10)
+        
+        Button:
+            text: "Cancelar"
+            on_release: root.popup.dismiss() # Fecha o alerta
+            
+        Button:
+            text: "Excluir"
+            background_color: 1, 0.3, 0.3, 1
+            on_release: 
+                root.on_confirm()
+                #root.popup.dismiss()
+
+<NoteListScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.97, 0.98, 1  # Fundo cinza azulado muito claro
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Minhas Notas"
+            font_size: '28sp'
+            bold: True
+            color: 0.1, 0.1, 0.2, 1
+            size_hint_y: None
+            height: dp(80)
+            halign: 'left'
+            text_size: self.size
+
+        RecycleView:
+            data: [{'text': f"{item['title']}\n[color=888888][size=13sp]{item['date']}[/size][/color]", 'markup': True, 'on_release': lambda x=item['id']: root.open_note(x)} for item in root.notes_data]
+            viewclass: 'NoteItem' # Usando nosso novo componente estilizado
+            RecycleBoxLayout:
+                default_size: None, dp(90)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
+                spacing: dp(12)
+
+        # Botão flutuante minimalista
+        Button:
+            text: "+"
+            font_size: '32sp' # increases size but keeping proportions
+            bold: True
+            halign: 'center'
+            valign: 'middle'
+            size_hint: None, None
+            size: dp(56), dp(56)
+            pos_hint: {'right': 1}
+            background_normal: ''
+            background_color: 0,0,0,0 # deixa o botao padrao transparente
+            on_release: root.manager.current = 'create'
+            #cria o botao redondo
+            canvas.before:
+                Color:
+                    rgba: 0.2, 0.4, 1, 1 # Azul moderno
+                Ellipse:
+                    pos: self.pos
+                    size: self.size
+
+<CreateNoteScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(15)
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.97, 0.98, 1  # Mesmo fundo da lista
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Nova Nota"
+            font_size: '24sp'
+            bold: True
+            color: 0.1, 0.1, 0.2, 1
+            size_hint_y: None
+            height: dp(60)
+            halign: 'left'
+            text_size: self.size
+
+        ModernInput:
+            id: note_title
+            hint_text: "Título"
+            size_hint_y: None
+            height: dp(55)
+            multiline: False
+
+        ModernInput:
+            id: note_content
+            hint_text: "Conteúdo da nota..."
+            # Ocupa o espaço restante
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(15)
+            
+            Button:
+                text: "Cancelar"
+                on_release: root.manager.current = 'list'
+            
+            Button:
+                text: "Salvar"
+                background_color: 0.2, 0.4, 1, 1
+                on_release: 
+                    root.save_note(note_title.text, note_content.text)
+                    note_title.text = ""
+                    note_content.text = ""
+
+<ViewNoteScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(15)
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.97, 0.98, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Editar Nota"
+            font_size: '24sp'
+            bold: True
+            color: 0.15, 0.15, 0.15, 1
+            size_hint_y: None
+            height: dp(60)
+            halign: 'left'
+            text_size: self.size
+
+        ModernInput:
+            id: title_input
+            size_hint_y: None
+            height: dp(55)
+            multiline: False
+
+        ModernInput:
+            id: content_input
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+
+            Button:
+                text: "Excluir"
+                color: 1, 1, 1, 1
+                background_color: 1, 0.3, 0.3, 1
+                on_release: root.show_delete_confirmation()
+
+            Button:
+                text: "Voltar"
+                on_release:
+                    root.manager.transition.direction = 'right'
+                    root.manager.current = 'list'
+
+            Button:
+                text: "Atualizar"
+                background_color: 0.2, 0.4, 1, 1
+                on_release: root.save_changes()
