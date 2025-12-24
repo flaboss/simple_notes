@@ -1,11 +1,14 @@
 from kivy.storage.jsonstore import JsonStore
 from datetime import datetime
 
+
 # funtion to define the storage
 def get_store(filename="notes.json"):
     return JsonStore(filename)
 
+
 store = get_store()
+
 
 class NoteManager:
     @staticmethod
