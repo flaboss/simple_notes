@@ -2,10 +2,16 @@
 <ModernInput@TextInput>:
     background_normal: ''
     background_active: ''
+    background_disabled_normal: ''
     background_color: 0, 0, 0, 0  # Remove o fundo padrão
     padding: [dp(15), dp(15)]
     font_size: '16sp'
     cursor_color: 0.2, 0.4, 1, 1
+    foreground_color: 0, 0, 0, 1
+    disabled_foreground_color: 0, 0,  0, 1
+    readonly_foreground_color: 0, 0, 0, 1
+    use_bubble: True
+    hint_text_color: 0.5, 0.5, 0.5, 1
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1  # Fundo branco
@@ -48,7 +54,7 @@
         text_size: self.width, None
         halign: 'center'
         font_size: '16sp'
-        color: 0.2, 0.2, 0.2, 1
+        color: 1,1,1,1
 
     BoxLayout:
         size_hint_y: None
@@ -64,7 +70,7 @@
             background_color: 1, 0.3, 0.3, 1
             on_release: 
                 root.on_confirm()
-                root.popup.dismiss()
+                #root.popup.dismiss()
 
 <NoteListScreen>:
     BoxLayout:
@@ -187,7 +193,7 @@
             text: "Editar Nota"
             font_size: '24sp'
             bold: True
-            color: 0.1, 0.1, 0.2, 1
+            color: 0.15, 0.15, 0.15, 1
             size_hint_y: None
             height: dp(60)
             halign: 'left'

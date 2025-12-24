@@ -1,0 +1,52 @@
+name: CI (Lint & Test)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Instalar dependências de sistema (para Kivy)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          python3-setuptools \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsdl2-ttf-dev \
+          libportmidi-dev \
+          libswscale-dev \
+          libavformat-dev \
+          libavcodec-dev \
+          libgstreamer1.0-dev \
+          gstreamer1.0-plugins-base \
+          gstreamer1.0-plugins-good
+
+    - name: Instalar dependências do projeto
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Rodar Linter (Ruff)
+      run: |
+        # Usamos o comando direto caso o Makefile precise de venv local
+        ruff check .
+
+    - name: Rodar Testes (Pytest)
+      run: |
+        PYTHONPATH=. pytest
