@@ -9,7 +9,7 @@ Um gestor de notas moderno e minimalista construído com Python e Kivy.
 - **Automação:** Makefile
 - **Base de Dados:** JSON Store (Persistência local)
 
-## 🛠️ Como Configurar
+## Como Configurar
 
 ### Pré-requisitos (macOS)
 ```bash
