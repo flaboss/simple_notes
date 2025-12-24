@@ -1,0 +1,15 @@
+# Ambiente Virtual
+venv/
+.venv/
+env/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Dados Locais (não queremos subir suas notas pessoais)
+notes.json
+
+# Sistema macOS
+.DS_Store
