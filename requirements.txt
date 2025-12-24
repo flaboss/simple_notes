@@ -6,5 +6,9 @@ kivy-deps.angle==0.4.0; sys_platform == 'win32'
 kivy-deps.glew==0.3.1; sys_platform == 'win32'
 kivy-deps.sdl2==0.7.0; sys_platform == 'win32'
 
+ruff==0.8.4
+pytest==8.2.0
+pytest-asyncio
+
 # Utilitário para empacotamento (opcional, mas recomendado)
 # buildozer  # Descomente se for gerar APK para Android no futuro
