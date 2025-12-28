@@ -11,4 +11,5 @@ pytest==8.2.0
 pytest-asyncio
 pre-commit==4.5.0
 pyinstaller==6.6.0
+jaraco.text==4.0.0
 
