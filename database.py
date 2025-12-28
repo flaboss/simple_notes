@@ -68,3 +68,16 @@ class NoteManager:
         except Exception as e:
             logger.error(f"Erro ao deletar a nota: {e}")
             return False
+        
+    @staticmethod
+    def search(query):
+        try:
+            query = query.lower()
+            all_notes = NoteManager.get_all()
+            if not query:
+                return all_notes
+
+            return [n for n in all_notes if query in n['title'].lower() or query in n['content'].lower()]
+        except Exception as e:
+            logger.error(f"Erro ao buscar notas: {e}")
+            return []

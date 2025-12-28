@@ -10,9 +10,18 @@ from database import NoteManager
 
 class NoteListScreen(Screen):
     notes_data = ListProperty([])
+    filtered_notes = ListProperty([])
 
     def on_pre_enter(self):
         self.notes_data = NoteManager.get_all()
+        self.filtered_notes = self.notes_data
+        self.ids.search_input.text = ""
+
+    def filter_notes(self, query):
+        if not query.strip():
+            self.filtered_notes = self.notes_data
+        else:
+            self.filtered_notes = [n for n in self.notes_data if query.lower() in n["title"].lower() or query.lower() in n["content"].lower()]
 
     def open_note(self, note_id):
         self.manager.transition.direction = "left"

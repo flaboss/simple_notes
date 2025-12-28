@@ -37,3 +37,15 @@ def test_delete_note():
 
     notas_depois = NoteManager.get_all()
     assert len(notas_depois) == 0
+
+def test_search_notes():
+    """Testa a funcionalidade de busca de notas"""
+    NoteManager.save("Primeira Nota", "Conteúdo da primeira nota")
+    NoteManager.save("Segunda Nota", "Conteúdo da segunda nota")
+    NoteManager.save("Outra Coisa", "Conteúdo diferente")
+
+    results = NoteManager.search("Nota")
+    assert len(results) == 2
+    titles = [nota["title"] for nota in results]
+    assert "Primeira Nota" in titles
+    assert "Segunda Nota" in titles
