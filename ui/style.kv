@@ -102,16 +102,18 @@
             multiline: False
             on_text: root.filter_notes(self.text)
 
-        RecycleView:
-            data: [{'text': f"{item['title']}\n[color=888888][size=13sp]{item['date']}[/size][/color]", 'markup': True, 'on_release': lambda x=item['id']: root.open_note(x)} for item in root.filtered_notes] 
-            viewclass: 'NoteItem'
-            RecycleBoxLayout:
-                default_size: None, dp(90)
-                default_size_hint: 1, None
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            GridLayout:
+                id: notes_box
+                cols: 1
                 size_hint_y: None
                 height: self.minimum_height
-                orientation: 'vertical'
                 spacing: dp(12)
+                padding: dp(10)
+                row_default_height: dp(90)
 
         # Botão flutuante minimalista
         Button:
