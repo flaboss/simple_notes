@@ -1,0 +1,1 @@
+../../../../Resources/Frameworks/kivy_install/kivy/_metrics.pxd
