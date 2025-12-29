@@ -1,24 +1,27 @@
 import os
 import pytest
-from database import NoteManager
+from app.database import NoteManager, get_data_dir
 
-TEST_DB = "notes_test.json"
-
+TEST_DB_NAME = "notes_test.json"
 
 @pytest.fixture(autouse=True)
 def setup_database():
-    # Configura o NoteManager para usar o banco de teste
-    NoteManager.set_storage(TEST_DB)
+    # Construct the full path matching the app's logic
+    data_dir = get_data_dir()
+    db_path = os.path.join(data_dir, TEST_DB_NAME)
 
     # Limpa o arquivo de teste antes de começar
-    if os.path.exists(TEST_DB):
-        os.remove(TEST_DB)
+    if os.path.exists(db_path):
+        os.remove(db_path)
+
+    # Configura o NoteManager para usar o banco de teste
+    NoteManager.set_storage(TEST_DB_NAME)
 
     yield
 
-    # Limpa após o teste para não deixar lixo na pasta
-    if os.path.exists(TEST_DB):
-        os.remove(TEST_DB)
+    # Limpa após o teste
+    if os.path.exists(db_path):
+        os.remove(db_path)
 
 
 def test_save_and_get_note():
