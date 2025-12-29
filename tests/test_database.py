@@ -1,8 +1,10 @@
 import os
 import pytest
-from app.database import NoteManager, get_data_dir
+from app.database import NoteManager
+from app.utils import get_data_dir
 
 TEST_DB_NAME = "notes_test.json"
+
 
 @pytest.fixture(autouse=True)
 def setup_database():
@@ -15,10 +17,13 @@ def setup_database():
         os.remove(db_path)
 
     # Configura o NoteManager para usar o banco de teste
+    NoteManager.enable_sync = False
     NoteManager.set_storage(TEST_DB_NAME)
 
     yield
 
+    # Restaura o estado original
+    NoteManager.enable_sync = True
     # Limpa após o teste
     if os.path.exists(db_path):
         os.remove(db_path)
@@ -40,6 +45,7 @@ def test_delete_note():
 
     notas_depois = NoteManager.get_all()
     assert len(notas_depois) == 0
+
 
 def test_search_notes():
     """Testa a funcionalidade de busca de notas"""

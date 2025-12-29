@@ -84,15 +84,35 @@
                 pos: self.pos
                 size: self.size
 
-        Label:
-            text: "Minhas Notas"
-            font_size: '28sp'
-            bold: True
-            color: 0.1, 0.1, 0.2, 1
+        BoxLayout:
             size_hint_y: None
-            height: dp(80)
-            halign: 'left'
-            text_size: self.size
+            height: dp(60)
+            
+            Label:
+                text: "Minhas Notas"
+                font_size: '28sp'
+                bold: True
+                color: 0.1, 0.1, 0.2, 1
+                halign: 'left'
+                text_size: self.size
+                valign: 'middle'
+
+            Button:
+                text: "Conta"
+                size_hint_x: None
+                width: dp(80)
+                background_normal: ''
+                background_color: 0.2, 0.4, 1, 1
+                color: 1, 1, 1, 1
+                bold: True
+                on_release: root.manager.current = 'login'
+                canvas.before:
+                    Color:
+                        rgba: 0.2, 0.4, 1, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [dp(5),]
 
         ModernInput:
             id: search_input
@@ -135,6 +155,72 @@
                 Ellipse:
                     pos: self.pos
                     size: self.size
+
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(15)
+        canvas.before:
+            Color:
+                rgba: 0.96, 0.97, 0.98, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "Conta & Sincronização"
+            font_size: '24sp'
+            bold: True
+            color: 0.1, 0.1, 0.2, 1
+            size_hint_y: None
+            height: dp(60)
+
+        ModernInput:
+            id: email_input
+            hint_text: "Email"
+            size_hint_y: None
+            height: dp(55)
+            multiline: False
+
+        ModernInput:
+            id: password_input
+            hint_text: "Senha"
+            password: True
+            size_hint_y: None
+            height: dp(55)
+            multiline: False
+
+        Label:
+            text: root.status_message
+            color: 1, 0, 0, 1
+            size_hint_y: None
+            height: dp(30)
+            font_size: '14sp'
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(15)
+            
+            Button:
+                text: "Entrar"
+                background_color: 0.2, 0.4, 1, 1
+                on_release: root.do_login(email_input.text, password_input.text)
+            
+            Button:
+                text: "Criar Conta"
+                background_color: 0.2, 0.6, 0.2, 1
+                on_release: root.do_register(email_input.text, password_input.text)
+
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: dp(50)
+            background_color: 0.5, 0.5, 0.5, 1
+            on_release: root.go_back()
+
+        Widget: # Spacer
 
 <CreateNoteScreen>:
     BoxLayout:
