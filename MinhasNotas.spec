@@ -14,16 +14,19 @@ hidden_imports = (
 
 jaraco_datas = collect_data_files('jaraco.text')
 raw_kivy_datas = collect_data_files('kivy')
-# Remap kivy data files into the Frameworks/kivy_install directory inside the .app bundle
 kivy_datas = []
 for src, dest in raw_kivy_datas:
-    kivy_datas.append((src, os.path.join('Frameworks', 'kivy_install', dest)))
+    if dest.startswith('kivy'):
+        new_dest = dest.replace('kivy', 'kivy_install', 1)
+        kivy_datas.append((src, new_dest))
+    else:
+        kivy_datas.append((src, os.path.join('kivy_install', dest)))
 
 a = Analysis(
-    ['main.py'],
-    pathex=[os.path.abspath('.')],
+    ['app/main.py'],
+    pathex=[os.path.abspath('.'), os.path.abspath('app')],
     binaries=[],
-    datas=[('ui', 'ui'), ('notes.json', '.')] + jaraco_datas + kivy_datas,
+    datas=[('app/ui', 'ui'), ('notes.json', '.')] + jaraco_datas + kivy_datas,
     hiddenimports=hidden_imports,
     hookspath=['hooks'],
     hooksconfig={},

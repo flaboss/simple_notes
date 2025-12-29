@@ -15,7 +15,7 @@
 
 <div class="node">
   <a name="main.py"></a>
-  <a target="code" href="/Users/buzz/code/estudos_kivy/kivy_notes_app/main.py" type="text/plain"><tt>main.py</tt></a>
+  <a target="code" href="/Users/buzz/code/estudos_kivy/kivy_notes_app/app/main.py" type="text/plain"><tt>main.py</tt></a>
 <span class="moduletype">Script</span>  <div class="import">
 imports:
     <a href="#_collections_abc">_collections_abc</a>
@@ -332,8 +332,10 @@ imports:
  &#8226;   <a href="#sre_constants">sre_constants</a>
  &#8226;   <a href="#sre_parse">sre_parse</a>
  &#8226;   <a href="#stat">stat</a>
+ &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#traceback">traceback</a>
  &#8226;   <a href="#types">types</a>
+ &#8226;   <a href="#utils">utils</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -6463,12 +6465,15 @@ imported by:
 
 <div class="node">
   <a name="database"></a>
-  <a target="code" href="/Users/buzz/code/estudos_kivy/kivy_notes_app/database.py" type="text/plain"><tt>database</tt></a>
+  <a target="code" href="/Users/buzz/code/estudos_kivy/kivy_notes_app/app/database.py" type="text/plain"><tt>database</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#datetime">datetime</a>
  &#8226;   <a href="#kivy.storage.jsonstore">kivy.storage.jsonstore</a>
+ &#8226;   <a href="#kivy.utils">kivy.utils</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#posixpath">posixpath</a>
 
   </div>
   <div class="import">
@@ -19701,7 +19706,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#kivy">kivy</a>
+    <a href="#database">database</a>
+ &#8226;   <a href="#kivy">kivy</a>
  &#8226;   <a href="#kivy.app">kivy.app</a>
  &#8226;   <a href="#kivy.base">kivy.base</a>
  &#8226;   <a href="#kivy.config">kivy.config</a>
@@ -21206,6 +21212,7 @@ imported by:
  &#8226;   <a href="#ctypes._aix">ctypes._aix</a>
  &#8226;   <a href="#ctypes.macholib.dyld">ctypes.macholib.dyld</a>
  &#8226;   <a href="#ctypes.util">ctypes.util</a>
+ &#8226;   <a href="#database">database</a>
  &#8226;   <a href="#docutils.frontend">docutils.frontend</a>
  &#8226;   <a href="#docutils.io">docutils.io</a>
  &#8226;   <a href="#docutils.nodes">docutils.nodes</a>
@@ -21340,6 +21347,7 @@ imported by:
  &#8226;   <a href="#unittest.loader">unittest.loader</a>
  &#8226;   <a href="#unittest.main">unittest.main</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
+ &#8226;   <a href="#utils">utils</a>
  &#8226;   <a href="#webbrowser">webbrowser</a>
  &#8226;   <a href="#xml.dom.domreg">xml.dom.domreg</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
@@ -22227,7 +22235,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#docutils.frontend">docutils.frontend</a>
+    <a href="#database">database</a>
+ &#8226;   <a href="#docutils.frontend">docutils.frontend</a>
  &#8226;   <a href="#docutils.utils">docutils.utils</a>
  &#8226;   <a href="#docutils.writers._html_base">docutils.writers._html_base</a>
  &#8226;   <a href="#docutils.writers.html4css1">docutils.writers.html4css1</a>
@@ -31568,6 +31577,7 @@ imported by:
  &#8226;   <a href="#linecache">linecache</a>
  &#8226;   <a href="#locale">locale</a>
  &#8226;   <a href="#logging">logging</a>
+ &#8226;   <a href="#main.py">main.py</a>
  &#8226;   <a href="#mimetypes">mimetypes</a>
  &#8226;   <a href="#more_itertools.more">more_itertools.more</a>
  &#8226;   <a href="#more_itertools.recipes">more_itertools.recipes</a>
@@ -31648,6 +31658,7 @@ imported by:
  &#8226;   <a href="#unittest.suite">unittest.suite</a>
  &#8226;   <a href="#urllib.parse">urllib.parse</a>
  &#8226;   <a href="#urllib.request">urllib.request</a>
+ &#8226;   <a href="#utils">utils</a>
  &#8226;   <a href="#warnings">warnings</a>
  &#8226;   <a href="#weakref">weakref</a>
  &#8226;   <a href="#webbrowser">webbrowser</a>
@@ -32808,6 +32819,23 @@ imported by:
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
     <a href="#site">site</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="utils"></a>
+  <a target="code" href="/Users/buzz/code/estudos_kivy/kivy_notes_app/app/utils.py" type="text/plain"><tt>utils</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#os">os</a>
+ &#8226;   <a href="#sys">sys</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#main.py">main.py</a>
 
   </div>
 
