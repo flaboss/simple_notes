@@ -10,6 +10,7 @@ __pycache__/
 
 # Dados Locais (não queremos subir suas notas pessoais)
 notes.json
+.env
 
 # Sistema macOS
 .DS_Store
