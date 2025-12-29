@@ -11,6 +11,8 @@ __pycache__/
 # Dados Locais (não queremos subir suas notas pessoais)
 notes.json
 .env
+auth_info.json
+notes_test.json
 
 # Sistema macOS
 .DS_Store
