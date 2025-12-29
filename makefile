@@ -14,7 +14,7 @@ install: ## Cria o venv e instala dependências
 	$(BIN)/pip install -r requirements.txt
 
 run: ## Executa o aplicativo
-	$(BIN)/python main.py
+	$(BIN)/python app/main.py
 
 lint: ## Executa o linter 
 	$(BIN)/ruff check .
@@ -25,6 +25,9 @@ format:
 test: ## Executa testes unitários (Pytest)
 	$(BIN)/pip install pytest
 	$(BIN)/pytest tests/
+
+build: ## Compila o app para macOS (PyInstaller)
+	$(BIN)/python -m PyInstaller --clean --noconfirm MinhasNotas.spec
 
 clean: ## Remove arquivos temporários
 	## rm -rf $(VENV)

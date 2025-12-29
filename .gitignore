@@ -13,3 +13,13 @@ notes.json
 
 # Sistema macOS
 .DS_Store
+
+# PyInstaller
+build/
+dist/
+*.spec
+
+# Assets gerados
+app_icon.png
+MinhasNotas.iconset/
+

@@ -103,6 +103,7 @@ class ConfirmPopup(BoxLayout):
 class NotesApp(App):
     def build(self):
         print('DEBUG: NotesApp.build() called')
+        self.icon = resource_path("app_icon.png")
         Builder.load_file(resource_path("ui/style.kv"))
         sm = ScreenManager(transition=SlideTransition())
         sm.add_widget(NoteListScreen(name="list"))

@@ -26,7 +26,7 @@ a = Analysis(
     ['app/main.py'],
     pathex=[os.path.abspath('.'), os.path.abspath('app')],
     binaries=[],
-    datas=[('app/ui', 'ui'), ('notes.json', '.')] + jaraco_datas + kivy_datas,
+    datas=[('app/ui', 'ui'), ('notes.json', '.'), ('app/app_icon.png', '.')] + jaraco_datas + kivy_datas,
     hiddenimports=hidden_imports,
     hookspath=['hooks'],
     hooksconfig={},
@@ -63,7 +63,7 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='MinhasNotas.app',
-    icon=None,
+    icon='MinhasNotas.icns',
     bundle_identifier=None,
 )
 
