@@ -18,7 +18,6 @@ notes.json
 # PyInstaller
 build/
 dist/
-*.spec
 
 # Assets gerados
 app_icon.png

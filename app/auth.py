@@ -2,10 +2,10 @@ import requests
 import os
 from dotenv import load_dotenv
 from kivy.storage.jsonstore import JsonStore
-from app.utils import get_data_dir
+from app.utils import get_data_dir, resource_path
 
 # Load environment variables
-load_dotenv()
+load_dotenv(resource_path(".env"))
 
 # PLACEHOLDERS - USER REPLACEMENT REQUIRED
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY", "")

@@ -6,21 +6,21 @@
     background_color: 0, 0, 0, 0  # Remove o fundo padrão
     padding: [dp(15), dp(15)]
     font_size: '16sp'
-    cursor_color: 0.2, 0.4, 1, 1
-    foreground_color: 0, 0, 0, 1
-    disabled_foreground_color: 0, 0,  0, 1
-    readonly_foreground_color: 0, 0, 0, 1
+    cursor_color: app.colors['accent']
+    foreground_color: app.colors['text']
+    disabled_foreground_color: app.colors['text']
+    readonly_foreground_color: app.colors['text']
     use_bubble: True
-    hint_text_color: 0.5, 0.5, 0.5, 1
+    hint_text_color: app.colors['text_sec']
     canvas.before:
         Color:
-            rgba: 1, 1, 1, 1  # Fundo branco
+            rgba: app.colors['surface']  # Fundo dinâmico
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [dp(10),]
         Color:
-            rgba: (0.2, 0.4, 1, 1) if self.focus else (0.9, 0.9, 0.9, 1)
+            rgba: app.colors['accent'] if self.focus else app.colors['border']
         Line:
             rounded_rectangle: (self.x, self.y, self.width, self.height, dp(10))
             width: dp(1)
@@ -31,7 +31,7 @@
     background_color: 0, 0, 0, 0  # Torna o fundo do botão transparente
     canvas.before:
         Color:
-            rgba: 1, 1, 1, 1  # Fundo branco para o "Card"
+            rgba: app.colors['surface']  # Fundo do Card
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -42,7 +42,7 @@
     halign: 'left'
     valign: 'middle'
     padding: [dp(20), dp(10)]
-    color: 0.1, 0.1, 0.1, 1  # Texto quase preto
+    color: app.colors['text']
 
 <ConfirmPopup>:
     orientation: 'vertical'
@@ -54,7 +54,7 @@
         text_size: self.width, None
         halign: 'center'
         font_size: '16sp'
-        color: 1,1,1,1
+        color: app.colors['text']
 
     BoxLayout:
         size_hint_y: None
@@ -67,7 +67,7 @@
             
         Button:
             text: "Excluir"
-            background_color: 1, 0.3, 0.3, 1
+            background_color: app.colors['danger']
             on_release: 
                 root.on_confirm()
                 #root.popup.dismiss()
@@ -79,7 +79,7 @@
         spacing: dp(20)
         canvas.before:
             Color:
-                rgba: 0.96, 0.97, 0.98, 1  # Fundo cinza azulado muito claro
+                rgba: app.colors['bg']  # Fundo dinâmico
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -92,7 +92,7 @@
                 text: "Minhas Notas"
                 font_size: '28sp'
                 bold: True
-                color: 0.1, 0.1, 0.2, 1
+                color: app.colors['text']
                 halign: 'left'
                 text_size: self.size
                 valign: 'middle'
@@ -102,13 +102,13 @@
                 size_hint_x: None
                 width: dp(80)
                 background_normal: ''
-                background_color: 0.2, 0.4, 1, 1
-                color: 1, 1, 1, 1
+                background_color: app.colors['accent']
+                color: [1, 1, 1, 1]
                 bold: True
                 on_release: root.manager.current = 'login'
                 canvas.before:
                     Color:
-                        rgba: 0.2, 0.4, 1, 1
+                        rgba: app.colors['accent']
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -151,7 +151,7 @@
             #cria o botao redondo
             canvas.before:
                 Color:
-                    rgba: 0.2, 0.4, 1, 1 # Azul moderno
+                    rgba: app.colors['accent'] # Azul moderno dinâmico
                 Ellipse:
                     pos: self.pos
                     size: self.size
@@ -163,7 +163,7 @@
         spacing: dp(15)
         canvas.before:
             Color:
-                rgba: 0.96, 0.97, 0.98, 1
+                rgba: app.colors['bg']
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -172,9 +172,16 @@
             text: "Conta & Sincronização"
             font_size: '24sp'
             bold: True
-            color: 0.1, 0.1, 0.2, 1
+            color: app.colors['text']
             size_hint_y: None
             height: dp(60)
+
+        Label:
+            text: "Logado como: " + root.user_email if root.is_logged_in else "Não logado"
+            color: app.colors['text_sec']
+            size_hint_y: None
+            height: dp(30)
+            font_size: '16sp'
 
         ModernInput:
             id: email_input
@@ -182,6 +189,7 @@
             size_hint_y: None
             height: dp(55)
             multiline: False
+            disabled: root.is_logged_in
 
         ModernInput:
             id: password_input
@@ -190,10 +198,11 @@
             size_hint_y: None
             height: dp(55)
             multiline: False
+            disabled: root.is_logged_in
 
         Label:
             text: root.status_message
-            color: 1, 0, 0, 1
+            color: (0, 0.5, 0, 1) if "sucesso" in root.status_message.lower() else (1, 0, 0, 1)
             size_hint_y: None
             height: dp(30)
             font_size: '14sp'
@@ -205,13 +214,33 @@
             
             Button:
                 text: "Entrar"
-                background_color: 0.2, 0.4, 1, 1
+                background_color: app.colors['accent']
                 on_release: root.do_login(email_input.text, password_input.text)
+                disabled: root.is_logged_in
+                opacity: 0 if root.is_logged_in else 1
             
             Button:
                 text: "Criar Conta"
                 background_color: 0.2, 0.6, 0.2, 1
                 on_release: root.do_register(email_input.text, password_input.text)
+                disabled: root.is_logged_in
+                opacity: 0 if root.is_logged_in else 1
+
+        Button:
+            text: "Sair da Conta"
+            size_hint_y: None
+            height: dp(50) if root.is_logged_in else dp(0)
+            opacity: 1 if root.is_logged_in else 0
+            disabled: not root.is_logged_in
+            background_color: app.colors['danger']
+            on_release: root.do_logout()
+
+        Button:
+            text: "Trocar para Tema " + ("Escuro" if app.current_theme == "light" else "Claro")
+            size_hint_y: None
+            height: dp(50)
+            background_color: 0.3, 0.3, 0.3, 1
+            on_release: app.toggle_theme()
 
         Button:
             text: "Voltar"
@@ -229,7 +258,7 @@
         spacing: dp(15)
         canvas.before:
             Color:
-                rgba: 0.96, 0.97, 0.98, 1  # Mesmo fundo da lista
+                rgba: app.colors['bg']  # Mesmo fundo da lista
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -238,7 +267,7 @@
             text: "Nova Nota"
             font_size: '24sp'
             bold: True
-            color: 0.1, 0.1, 0.2, 1
+            color: app.colors['text']
             size_hint_y: None
             height: dp(60)
             halign: 'left'
@@ -267,7 +296,7 @@
             
             Button:
                 text: "Salvar"
-                background_color: 0.2, 0.4, 1, 1
+                background_color: app.colors['accent']
                 on_release: 
                     root.save_note(note_title.text, note_content.text)
                     note_title.text = ""
@@ -280,7 +309,7 @@
         spacing: dp(15)
         canvas.before:
             Color:
-                rgba: 0.96, 0.97, 0.98, 1
+                rgba: app.colors['bg']
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -289,7 +318,7 @@
             text: "Editar Nota"
             font_size: '24sp'
             bold: True
-            color: 0.15, 0.15, 0.15, 1
+            color: app.colors['text']
             size_hint_y: None
             height: dp(60)
             halign: 'left'
@@ -311,8 +340,8 @@
 
             Button:
                 text: "Excluir"
-                color: 1, 1, 1, 1
-                background_color: 1, 0.3, 0.3, 1
+                color: [1, 1, 1, 1]
+                background_color: app.colors['danger']
                 on_release: root.show_delete_confirmation()
 
             Button:
@@ -323,5 +352,5 @@
 
             Button:
                 text: "Atualizar"
-                background_color: 0.2, 0.4, 1, 1
+                background_color: app.colors['accent']
                 on_release: root.save_changes()

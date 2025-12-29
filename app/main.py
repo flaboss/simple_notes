@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import ListProperty, StringProperty, DictProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
 from kivy.factory import Factory
@@ -114,9 +114,15 @@ class ConfirmPopup(BoxLayout):
         self.popup = None
 
 
+from kivy.properties import DictProperty
+
 class NotesApp(App):
+    current_theme = StringProperty("light")
+    colors = DictProperty({})
+
     def build(self):
         print("DEBUG: NotesApp.build() called")
+        self.update_theme_colors()
         self.icon = resource_path("app_icon.png")
         Builder.load_file(resource_path("app/ui/style.kv"))
         sm = ScreenManager(transition=SlideTransition())
@@ -126,6 +132,33 @@ class NotesApp(App):
         sm.add_widget(LoginScreen(name="login"))
         print("DEBUG: NotesApp.build() returning ScreenManager")
         return sm
+
+    def update_theme_colors(self, *args):
+        if self.current_theme == "light":
+            self.colors = {
+                "bg": [0.98, 0.98, 1, 1],
+                "surface": [1, 1, 1, 1],
+                "text": [0.05, 0.05, 0.1, 1],
+                "text_sec": [0.4, 0.4, 0.5, 1],
+                "accent": [0.1, 0.5, 1, 1],
+                "border": [0.9, 0.9, 0.95, 1],
+                "danger": [1, 0.3, 0.3, 1]
+            }
+        else:
+            # "Antigravity" Premium Deep Space Theme
+            self.colors = {
+                "bg": [0.02, 0.02, 0.04, 1],      # Absolute deep space
+                "surface": [0.1, 0.1, 0.15, 1],   # Glassy surface
+                "text": [0.9, 0.95, 1, 1],        # Super clean white
+                "text_sec": [0.5, 0.55, 0.7, 1],  # Cool grey
+                "accent": [0, 0.7, 1, 1],         # Electric cyan
+                "border": [0.2, 0.2, 0.3, 1],     # Space border
+                "danger": [1, 0.2, 0.4, 1]        # Neon red
+            }
+
+    def toggle_theme(self):
+        self.current_theme = "dark" if self.current_theme == "light" else "light"
+        self.update_theme_colors()
 
     def on_start(self):
         print("DEBUG: NotesApp.on_start()")
