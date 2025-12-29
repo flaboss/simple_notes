@@ -3,7 +3,7 @@ PYTHON = python3
 VENV = venv
 BIN = $(VENV)/bin
 
-.PHONY: help install run lint test clean
+.PHONY: help install run lint format test setup build clean
 
 help: ## Mostra os comandos disponíveis
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -26,8 +26,18 @@ test: ## Executa testes unitários (Pytest)
 	$(BIN)/pip install pytest
 	$(BIN)/pytest tests/
 
+setup: ## Instala dependências e prepara o ambiente
+	$(BIN)/pip install -r requirements.txt
+	@if [ ! -f .env ]; then \
+		echo "FIREBASE_API_KEY=\"PASTE_YOUR_API_KEY_HERE\"" > .env; \
+		echo "FIREBASE_DB_URL=\"PASTE_YOUR_DATABASE_URL_HERE\"" >> .env; \
+	fi
+
 build: ## Compila o app para macOS (PyInstaller)
+	@echo "Limpando builds anteriores..."
+	rm -rf build dist
 	$(BIN)/python -m PyInstaller --clean --noconfirm MinhasNotas.spec
+	@echo "Build concluído! Verifique a pasta dist/"
 
 clean: ## Remove arquivos temporários
 	## rm -rf $(VENV)
